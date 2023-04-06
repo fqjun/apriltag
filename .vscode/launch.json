@@ -5,14 +5,14 @@
           "name": "apriltag_demo",
           "type": "cppdbg",
           "request": "launch",
-          "program": "./example/apriltag_demo.o",
-          "args": [],
-          "stopAtEntry": false,
+          "program": "${workspaceFolder}/apriltag_demo",
+          "args": ["${workspaceFolder}/QR-code-230231-V1.4.jpg"],
+          "stopAtEntry": true,
           "cwd": "${workspaceFolder}",
           "environment": [],
           "externalConsole": false,
           "MIMode": "gdb",
-          "preLaunchTask": "apriltag_demo_build"
+          "miDebuggerPath": "/usr/bin/gdb"
       }
   ]
 }
