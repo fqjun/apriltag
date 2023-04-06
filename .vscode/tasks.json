@@ -1,0 +1,38 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"type": "cppbuild",
+			"label": "apriltag_demo_build",
+			"command": "/usr/bin/gcc-9",
+			"args": [
+				"-std=gnu99",
+				"-Wall",
+				"-Wno-unused-parameter",
+				"-Wno-unused-function",
+				"-O3",
+				"-lpthread",
+				"-lm",
+
+				"-I","${workspaceFolder}/",
+				"-I","${workspaceFolder}/common/**",
+				"-I","/usr/local/include/opencv4/",
+				"-g","${workspaceFolder}/example/apriltag_demo.c",
+				"-o","${workspaceFolder}/example/apriltag_demo.o",
+
+				"/usr/local/lib/libopencv_*",
+			],
+			"options": {
+				"cwd": "${workspaceFolder}"
+			},
+			"problemMatcher": [
+				"$gcc"
+			],
+			"group": {
+				"kind": "build",
+				"isDefault": true
+			},
+			"detail": "编译器: /usr/bin/gcc-9"
+		}
+	]
+}

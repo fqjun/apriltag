@@ -1,0 +1,13 @@
+{
+  "files.associations": {
+    "cstdlib": "c",
+    "cmath": "cpp"
+  },
+  "folders": [
+    {
+        "path": "."
+    }
+  ],
+  "settings": {},
+
+}

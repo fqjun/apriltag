@@ -1,0 +1,18 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+      {
+          "name": "apriltag_demo",
+          "type": "cppdbg",
+          "request": "launch",
+          "program": "./example/apriltag_demo.o",
+          "args": [],
+          "stopAtEntry": false,
+          "cwd": "${workspaceFolder}",
+          "environment": [],
+          "externalConsole": false,
+          "MIMode": "gdb",
+          "preLaunchTask": "apriltag_demo_build"
+      }
+  ]
+}
