@@ -13,7 +13,7 @@ apriltag_py_type.docstring.h
 apriltag.pc
 cmake_install.cmake
 CMakeCache.txt
-libapriltag.so.3.3.0
-libapriltag.so.3
+libapriltagd.so.3.3.0
+libapriltagd.so.3
 install_manifest.txt
 opencv_demo
