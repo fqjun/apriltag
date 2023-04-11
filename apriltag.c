@@ -900,6 +900,7 @@ static void quad_decode_task(void *_u)
 
         // refine edges is not dependent upon the tag family, thus
         // apply this optimization BEFORE the other work.
+        // 用于对四边形的边缘进行优化处理，从而得到更加准确的四个顶点坐标。
         //if (td->quad_decimate > 1 && td->refine_edges) {
         if (td->refine_edges) {
             refine_edges(td, im, quad_original);
@@ -959,7 +960,7 @@ static void quad_decode_task(void *_u)
                     int tcy = (i < 2) ? 1 : -1;
 
                     double p[2];
-
+                    // 通过单应性矩阵计算精确的中心 xy 坐标，最后整理到 det 中
                     homography_project(det->H, tcx, tcy, &p[0], &p[1]);
 
                     det->p[i][0] = p[0];
