@@ -923,10 +923,11 @@ static void quad_decode_task(void *_u)
             struct quad *quad = quad_copy(quad_original);
 
             struct quick_decode_entry entry;
-
+            // ID 信息在这里面继续计算，利用汉明距离进行筛选，最终通过 quick_decode_codeword 返回到 entry 中
             float decision_margin = quad_decode(td, family, im, quad, &entry, task->im_samples);
 
             if (decision_margin >= 0 && entry.hamming < 255) {
+                // 根据边缘值和汉明距离筛选出正确的四边型进行单应性矩阵的计算，并最终的到图像中二维码正确的四个顶点以及中心点坐标
                 apriltag_detection_t *det = calloc(1, sizeof(apriltag_detection_t));
 
                 det->family = family;
@@ -1023,6 +1024,7 @@ zarray_t *apriltag_detector_detect(apriltag_detector_t *td, image_u8_t *im_orig)
     ///////////////////////////////////////////////////////////
     // Step 1. Detect quads according to requested image decimation
     // and blurring parameters.
+    // 第一步：基于图像降采样和模糊参数的四边型检测
     image_u8_t *quad_im = im_orig;
     if (td->quad_decimate > 1) {
         quad_im = image_u8_decimate(im_orig, td->quad_decimate);
@@ -1030,6 +1032,7 @@ zarray_t *apriltag_detector_detect(apriltag_detector_t *td, image_u8_t *im_orig)
         timeprofile_stamp(td->tp, "decimate");
     }
 
+    //第一步中的图像预处理：模糊和降采样
     if (td->quad_sigma != 0) {
         // compute a reasonable kernel width by figuring that the
         // kernel should go out 2 std devs.
@@ -1079,11 +1082,12 @@ zarray_t *apriltag_detector_detect(apriltag_detector_t *td, image_u8_t *im_orig)
 
     if (td->debug)
         image_u8_write_pnm(quad_im, "debug_preprocess.pnm");
-
+    // 第一步中的图像二值化+四边型检测
     zarray_t *quads = apriltag_quad_thresh(td, quad_im);
 
     // adjust centers of pixels so that they correspond to the
     // original full-resolution image.
+    // 第一步中的降采样处理，根据参数选择是否开启
     if (td->quad_decimate > 1) {
         for (int i = 0; i < zarray_size(quads); i++) {
             struct quad *q;
@@ -1136,6 +1140,7 @@ zarray_t *apriltag_detector_detect(apriltag_detector_t *td, image_u8_t *im_orig)
 
     ////////////////////////////////////////////////////////////////
     // Step 2. Decode tags from each quad.
+    // 第二部：对每个四边型进行标签检测，顺带利用是否有二维码筛选正确的四边型
     if (1) {
         image_u8_t *im_samples = td->debug ? image_u8_copy(im_orig) : NULL;
 
@@ -1153,7 +1158,7 @@ zarray_t *apriltag_detector_detect(apriltag_detector_t *td, image_u8_t *im_orig)
             tasks[ntasks].detections = detections;
 
             tasks[ntasks].im_samples = im_samples;
-
+            // 识别任务的函数入口，已用多线程加速
             workerpool_add_task(td->wp, quad_decode_task, &tasks[ntasks]);
             ntasks++;
         }
