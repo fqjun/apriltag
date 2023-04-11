@@ -79,6 +79,15 @@ int main(int argc, char *argv[])
         cerr << "Couldn't open video capture device" << endl;
         return -1;
     }
+    int width = 640;
+    int height = 480;
+#if CV_MAJOR_VERSION > 3
+    cap.set(CAP_PROP_FRAME_WIDTH, width);
+    cap.set(CAP_PROP_FRAME_HEIGHT, height);
+#else
+    cap.set(CV_CAP_PROP_FRAME_WIDTH, width);
+    cap.set(CV_CAP_PROP_FRAME_HEIGHT, height);
+#endif
 
     // Initialize tag detector with options
     apriltag_family_t *tf = NULL;
@@ -119,7 +128,7 @@ int main(int argc, char *argv[])
     td->debug = getopt_get_bool(getopt, "debug");
     td->refine_edges = getopt_get_bool(getopt, "refine-edges");
 
-    float frame_counter = 0.0f;
+    // float frame_counter = 0.0f;
     meter.stop();
     cout << "Detector " << famname << " initialized in "
         << std::fixed << std::setprecision(3) << meter.getTimeSec() << " seconds" << endl;
