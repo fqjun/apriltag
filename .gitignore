@@ -2,6 +2,8 @@
 *.so
 *.o
 *.swp
+*.pnm
+*.ps
 example/opencv_demo
 example/apriltag_demo
 build/
@@ -17,3 +19,4 @@ libapriltagd.so.3.3.0
 libapriltagd.so.3
 install_manifest.txt
 opencv_demo
+

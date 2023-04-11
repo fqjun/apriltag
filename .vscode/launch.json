@@ -13,6 +13,19 @@
           "externalConsole": false,
           "MIMode": "gdb",
           "miDebuggerPath": "/usr/bin/gdb"
+      },
+      {
+        "name": "opencv_demo",
+        "type": "cppdbg",
+        "request": "launch",
+        "program": "${workspaceFolder}/example/opencv_demo",
+        "args": ["-c 2 -t 16"],
+        "stopAtEntry": true,
+        "cwd": "${workspaceFolder}",
+        "environment": [],
+        "externalConsole": false,
+        "MIMode": "gdb",
+        "miDebuggerPath": "/usr/bin/gdb"
       }
   ]
 }
